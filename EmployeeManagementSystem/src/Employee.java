@@ -36,10 +36,10 @@ public class Employee {
             System.out.println("Success");
         }
         catch(ClassNotFoundException ex){
-            System.out.println("jajajaj");
+            ex.printStackTrace();
         }
         catch (SQLException ex){
-            System.out.println("yoyoyo");
+            ex.printStackTrace();
         }
     }
 
@@ -50,7 +50,28 @@ public class Employee {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                String empname,salary,mobile;
+
+                empname = txtName.getText();
+                salary = txtSalary.getText();
+                mobile = txtMobile.getText();
+
+                try{
+                    pst = con.prepareStatement("insert into employee(empname,salary,mobile)values(?,?,?)");
+                    pst.setString(1, empname);
+                    pst.setString(2, salary);
+                    pst.setString(3, mobile);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Record Added!!!!");
+//                    table_load();
+                    txtName.setText("");
+                    txtSalary.setText("");
+                    txtMobile.setText("");
+                    txtName.requestFocus();
+                }
+                catch (SQLException e1){
+                    e1.printStackTrace();
             }
-        });
+        }
     }
 }
