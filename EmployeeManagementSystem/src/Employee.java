@@ -82,7 +82,7 @@ public class Employee {
                     pst.setString(2, salary);
                     pst.setString(3, mobile);
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Record Added!!!!");
+                    JOptionPane.showMessageDialog(null, "Record Added!");
                     table_load();
                     txtName.setText("");
                     txtSalary.setText("");
@@ -121,7 +121,7 @@ public class Employee {
                         txtName.setText("");
                         txtSalary.setText("");
                         txtMobile.setText("");
-                        JOptionPane.showMessageDialog(null,"Invalid Employee Id");
+                        JOptionPane.showMessageDialog(null,"Employee is not found");
 
                     }
                 }
@@ -151,7 +151,7 @@ public class Employee {
                     pst.setString(4, empid);
 
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Record Updated!!!!!");
+                    JOptionPane.showMessageDialog(null, "Record Updated!");
                     table_load();
                     txtName.setText("");
                     txtSalary.setText("");
@@ -164,7 +164,35 @@ public class Employee {
                     e1.printStackTrace();
                 }
             }
-            
+
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String empid;
+                empid = txtid.getText();
+
+                try {
+                    pst = con.prepareStatement("delete from employee  where id = ?");
+
+                    pst.setString(1, empid);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Record Deleted!");
+                    table_load();
+                    txtName.setText("");
+                    txtSalary.setText("");
+                    txtMobile.setText("");
+                    txtName.requestFocus();
+                }
+
+                catch (SQLException e1)
+                {
+
+                    e1.printStackTrace();
+                }
+            }
+
         });
     }
 }
