@@ -57,7 +57,7 @@
         </constraints>
         <properties/>
       </component>
-      <scrollpane id="27893">
+      <scrollpane id="27893" binding="table_1">
         <constraints>
           <grid row="1" column="2" row-span="6" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>

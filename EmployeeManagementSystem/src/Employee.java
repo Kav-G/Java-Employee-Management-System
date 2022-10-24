@@ -1,3 +1,5 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ public class Employee {
     private JButton deleteButton;
     private JButton searchButton;
     private JTextField txtid;
+    private JScrollPane table_1;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Employee");
@@ -31,8 +34,8 @@ public class Employee {
 
     public void connect(){
         try{
-          Class.forName("com.mysql.cj.jdbc.Driver");
-          con = DriverManager.getConnection("jdbc:mysql://localhost/rbcompany", "root", "");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/rbcompany", "root", "");
             System.out.println("Success");
         }
         catch(ClassNotFoundException ex){
@@ -43,9 +46,26 @@ public class Employee {
         }
     }
 
+    void table_load()
+    {
+
+            try
+            {
+                pst = con.prepareStatement("select * from employee");
+                ResultSet rs = pst.executeQuery();
+                table1.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+
+    }
+
 
     public Employee() {
         connect();
+        table_load();
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,7 +83,7 @@ public class Employee {
                     pst.setString(3, mobile);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Record Added!!!!");
-//                    table_load();
+                    table_load();
                     txtName.setText("");
                     txtSalary.setText("");
                     txtMobile.setText("");
@@ -71,7 +91,8 @@ public class Employee {
                 }
                 catch (SQLException e1){
                     e1.printStackTrace();
+                }
             }
-        }
+        });
     }
 }
